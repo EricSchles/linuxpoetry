@@ -1,0 +1,29 @@
+---
+
+project_root_code: "{{ project_root }}/code"
+project_root_scripts: "{{ project_root }}/scripts"
+project_root_home: "{{ project_root }}/home"
+project_root_venv: "{{ project_root }}/env"
+project_root_static: "{{ project_root_code }}/static"
+
+gunicorn_workers: 3
+gunicorn_port: 8000
+
+system_packages:
+  - build-essential
+  - git
+  - libevent-dev
+  - libffi-dev
+  - python-dev
+  - python-setuptools
+  - bcrypt
+  - libpq-dev
+python_packages:
+  - pip
+  - virtualenv
+  - gunicorn
+supervisord_confs:
+  - gunicorn.conf
+scripts:
+  - start_gunicorn.sh
+  - kill_gunicorn.sh

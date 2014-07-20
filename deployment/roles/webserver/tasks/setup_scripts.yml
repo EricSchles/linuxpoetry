@@ -1,0 +1,14 @@
+---
+
+- name: Create the scripts directory.
+  file: group={{ project_name }}
+        owner={{ project_name }} 
+        mode=755 
+        state=directory 
+        path={{ project_root_scripts }}
+
+- name: Install scripts.
+  template: src="{{ item }}.j2" 
+            dest="{{ project_root_scripts }}/{{item}}"
+            mode=0744
+  with_items: scripts

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+{% autoescape off %}
+<html>
+  <head>
+    <link rel="shortcut icon" href="{{ static_url }}logo_tiny.jpg"/>
+    <style>
+        html {
+          height: 100%;
+          font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif;
+        }
+
+        a {
+          text-decoration: none;
+          color: #222;
+        }
+
+        a:hover {
+          cursor: pointer;
+        }
+
+        .post-frame a {
+          text-decoration: underline;
+        }
+
+        ul.top-nav {
+          border-top: solid 1px #444;
+          border-bottom: solid 1px #444;
+          list-style-type: none;
+          margin: auto;
+        }
+
+        ul.top-nav li {
+          display: inline;
+        }
+
+        .primary-frame {
+          margin-top: 20px; 
+          margin-bottom: 0px;
+          font-weight: normal;
+          color: #222;
+          width: 640px;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
+        }
+
+        .headline {
+          font-size: 60px;
+        }
+
+        .sub-headline {
+          font-size: 30px;
+          color: #444;
+        }
+
+        .tag-frame {
+          color: #555;
+          float: left;
+          font-size: 14px;
+          text-align: left;
+          margin-top: 5px;
+        }
+
+        .prev-next-frame {
+          float: right;
+        }
+
+        .post-frame {
+          width: 640px;
+          margin-top: 20px;
+          font-family: {% block font-family %}"Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif{% endblock %};
+        }
+
+        .post-title {
+          color: #222;
+          font-size: 22px;
+          font-weight: bold;
+          text-align: center;
+        }
+
+        .post-body {
+          font-size: 18px;
+          margin-top: 15px;
+          margin-bottom: 15px;
+          text-align: {% block text-align %}center{% endblock %};
+        }
+
+        .timestamp {
+          font-size: 12px;
+          color: #555;
+        }
+
+        .twitter {
+          color: #4099ff;
+        }
+    </style>
+    <title> 
+        {% if post.title %} {{ post.title }}:{% endif %} Morgan (Reece) Phillips @linuxpoetry
+    </title>
+  </head>
+  <body>
+    <div class="primary-frame">
+
+      <!-- BUILDING OUR HEADING -->
+      <span class="headline"> <a href="{% url "index" %}">Linux Poetry </a></span>
+
+      <!-- NAVBAR -->
+      <ul class="sub-headline top-nav">
+        <li>/<a href="{% url "post" 1 %}"> about </a>/</li>
+        <li>
+            <a href="{% url "blogindex" %}"> blog </a>/
+        </li>
+        <li> 
+          <a
+            class="twitter"
+            onCLick=window.open("http://www.twitter.com/linuxpoetry")>
+            <img src="{{ static_url }}twitterbird.svg" width="25px"></img>
+          </a>
+        </li>
+      </ul>
+
+      <!-- UPPER LEFT NAV BAR -->
+      <div class="tag-frame">
+        {tags: <span id="tagframe"> {% if post %} {{ post.tags_str }} {% endif %}</span>  }
+      </div>
+      
+      <!-- UPPER RIGHT NAV BAR -->
+      <div class="prev-next-frame">
+        <span class="prev-post"> 
+            {% if prev_id %} 
+                <a href="
+                {% block prev_url %}
+                    {% url "post" prev_id %}
+                {% endblock %}
+                ">
+                    <b>prev</b>
+                </a> 
+            {% endif %}
+        </span>
+        {% if prev_id and next_id %} | {% endif %}
+        <span class="next-post"> 
+            {% if next_id %}
+                <a href=" 
+                {% block next_url %}
+                    {% url "post" next_id %}
+                {% endblock %}
+                ">
+                    <b>next</b>
+                </a> 
+            {% endif %}
+        </span>
+      </div>
+
+      <!-- POST CONTENTS -->
+      <br/>
+      <div id="postframe" class="post-frame">
+        <span class="post-title"> {% if post %} {{ post.title }} {% else %} - No Content - {% endif %} </span>
+        <div class="post-body">
+        {% if post %} {{ post.body_with_html }} {% endif %}
+        </div>
+        <span class="timestamp"> {% if post %} {{ post.updated_at|date:"m-d-Y" }} {% endif %}, 
+            <a href="{% url "rss" %}">rss feed</a> 
+            <a href="{% url "license" %}">license</a>
+        </span>
+      </div>  
+
+    </div>
+  <!-- GOOGLE ANALYTICS -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-50383638-1', 'linux-poetry.com');
+        ga('send', 'pageview');
+    </script>  
+  </body>
+{% endautoescape %}
+</html>

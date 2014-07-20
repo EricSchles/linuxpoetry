@@ -1,0 +1,10 @@
+---
+
+- include: databases.yml
+
+- include: webservers.yml
+  vars:
+    - db_host: "{{ hostvars.database.ansible_eth1.ipv4.address }}"
+    - db_port: 5432
+  vars_files:
+    - vars/vault/databases.yml   

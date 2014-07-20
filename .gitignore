@@ -1,0 +1,5 @@
+error.log
+deployment/deploy.sh
+poetry/settings/local_settings.py
+.vagrant
+*.pyc

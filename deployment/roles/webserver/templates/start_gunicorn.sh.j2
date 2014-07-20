@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+
+export PYTHONPATH=$PYTHONPATH:{{ project_root_code }}
+export DJANGO_SECRET_KEY="{{ django_secret_key }}"
+{% if has_remote_db == true %}
+    export DB_USER="{{ db_user }}"
+    export DB_PASSWORD="{{ db_password }}"
+{% endif %}
+{{ project_root_venv }}/bin/gunicorn -w {{ gunicorn_workers }} {{ project_wsgi }}:application -b 0.0.0.0:{{ gunicorn_port }}

@@ -1,0 +1,5 @@
+---
+
+conf_files:
+  - pg_hba.conf
+  - postgresql.conf
