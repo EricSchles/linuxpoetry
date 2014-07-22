@@ -1,4 +1,12 @@
-server_name: localhost
+project_root: "/var/projects/{{ project_name }}"
 project_wsgi: "{{ project_name }}.wsgi"
-provision: true
-deploy: true
+
+create_version_link: true  # symlinks are used to point to our current version
+branch: master
+version: "{{ branch }}"
+
+django_settings_path: "{{ project_name }}/settings"
+
+server_name: localhost
+gunicorn_workers: 3
+gunicorn_port: 8000

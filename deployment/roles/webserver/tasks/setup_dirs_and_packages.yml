@@ -17,7 +17,7 @@
         mode=755
 
 - name: Create user.
-  user: home={{ project_root_home }}
+  user: home={{ project_home }}
         name={{ project_name }}
         state=present
 
@@ -31,11 +31,30 @@
         owner={{ project_name }} 
         mode=755 
         state=directory 
-        path={{ project_root_code }}
+        path={{ project_code_real }}
+
+- name: Create symlink to the current version's code
+  file: state=link
+        src={{ project_code_real }}
+        dest={{ project_code }}
+  tags: symlink
+
+- name: Create the venv directory.
+  file: group={{ project_name }}
+        owner={{ project_name }} 
+        mode=755 
+        state=directory 
+        path={{ project_venv_real }}
+
+- name: Create symlink to the current version's venv
+  file: state=link
+        src={{ project_venv_real }}
+        dest={{ project_venv }}
+  tags: symlink
 
 - name: Create the .ssh directory.
   file: group={{ project_name }}
         owner={{ project_name }}
         mode=755 
         state=directory 
-        path="{{ project_root_home }}/.ssh/"
+        path="{{ project_home }}/.ssh/"

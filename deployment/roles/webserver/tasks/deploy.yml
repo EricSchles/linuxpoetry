@@ -1,25 +1,20 @@
 ---
   
-  - name: Pull sources from the repository.
-    git: repo={{ project_repo }} 
-         dest={{ project_root_code }}
-         version={{ branch }}
-
-  - name: Compile local_settings.py with db info.
-    template: src=local_settings.py.j2
-              dest="{{ project_root_code }}/{{ django_settings_path }}/local_settings.py"
-    when: has_remote_db
+- name: Pull sources from the repository.
+  git: repo={{ project_repo }} 
+       dest={{ project_code }}
+       version={{ branch }}
   
-  - name: Upgrade the virtualenv.
-    pip: requirements="{{ project_root_code }}/requirements.txt"
-         virtualenv={{ project_root_venv }}
-  
-  - name: Sync the database and restart the server. 
-    django_manage: command=syncdb
-                   app_path={{ project_root_code }}
-                   virtualenv={{ project_root_venv }}
-    notify: 
-      - kill gunicorn
-      - restart nginx
-      - reload supervisor
-      - restart supervisor
+- name: Install requirements to virtual environment.
+  pip: requirements="{{ project_code }}/requirements.txt"
+       virtualenv={{ project_venv }}
+       
+- name: Sync the database and restart the server. 
+  django_manage: command=syncdb
+                 app_path={{ project_code }}
+                 virtualenv={{ project_venv }}
+  notify: 
+    - kill gunicorn
+    - restart nginx
+    - reload supervisor
+    - restart supervisor

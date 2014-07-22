@@ -5,10 +5,16 @@
         owner={{ project_name }} 
         mode=755 
         state=directory 
-        path={{ project_root_scripts }}
+        path={{ project_scripts }}
 
-- name: Install scripts.
+- name: Render scripts.
   template: src="{{ item }}.j2" 
-            dest="{{ project_root_scripts }}/{{item}}"
+            dest="{{ project_scripts }}/{{item}}"
             mode=0744
   with_items: scripts
+
+- name: Copy scripts.
+  copy: src={{ item }}
+        dest="{{ project_scripts }}/{{ item }}"
+        mode=0744
+  with_items: files

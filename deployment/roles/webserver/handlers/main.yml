@@ -8,7 +8,7 @@
   sudo_user: root
 
 - name: kill gunicorn
-  shell: "{{ project_root_scripts }}/kill_gunicorn.sh"
+  shell: "{{ project_scripts }}/kill_gunicorn.sh"
   sudo_user: root
 
 - name: reload supervisor 
