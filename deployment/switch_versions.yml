@@ -1,0 +1,21 @@
+---
+#  A simple switch of venv and code version by modifying symlinkss
+
+- hosts: webservers
+  sudo: yes
+  sudo_user: root
+  name: Switch app versions.
+  serial: 1  # a rolling update!  
+  remote_user: "{{ remote_user }}"
+  handlers:
+    - include: roles/webserver/handlers/main.yml
+  vars_files:
+    - roles/webserver/defaults/main.yml
+    - roles/webserver/vars/main.yml
+  tasks:
+    - include: roles/webserver/tasks/setup_dirs_and_packages.yml
+      notify:
+        - reload supervisor
+        - restart supervisor
+        - restart nginx
+    # Here it would be good to include a test to fail if the site isn't up

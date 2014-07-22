@@ -2,12 +2,12 @@
   
 - name: Pull sources from the repository.
   git: repo={{ project_repo }} 
-       dest={{ project_code }}
+       dest={{ project_code_real }}
        version={{ branch }}
   
 - name: Install requirements to virtual environment.
-  pip: requirements="{{ project_code }}/requirements.txt"
-       virtualenv={{ project_venv }}
+  pip: requirements="{{ project_code_real }}/requirements.txt"
+       virtualenv={{ project_venv_real }}
        
 - name: Sync the database and restart the server. 
   django_manage: command=syncdb
