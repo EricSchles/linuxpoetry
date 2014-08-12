@@ -11,6 +11,7 @@ project_static: "{{ project_code }}/static"
 system_packages:
   - git
   - python-setuptools
+  - python-dev
 python_packages:
   - pip
   - virtualenv

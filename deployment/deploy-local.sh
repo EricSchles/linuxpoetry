@@ -1,1 +1,1 @@
-ansible-playbook site.yml -i local "$@" -c local
+ansible-playbook webservers.yml -i local "$@" -c local
