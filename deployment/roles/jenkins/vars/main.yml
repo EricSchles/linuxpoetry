@@ -1,0 +1,9 @@
+---
+
+jenkins_git_plugins:
+  - git.hpi
+  - git-client.hpi
+  - github-api.hpi
+  - github.hpi
+  - github-oauth.hpi
+  - scm-api.hpi

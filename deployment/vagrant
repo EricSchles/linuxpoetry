@@ -3,3 +3,6 @@ webservers
 
 [webservers]
 webserver 
+
+[jenkins]
+webserver

@@ -1,0 +1,17 @@
+---
+
+- name: install jenkins-git packages loop
+  apt: name={{ item }} state=installed
+  with_items:
+    - git
+  tags:
+    - jenkins-git
+
+- name: download jenkins-git plugins
+  get_url: dest=/var/lib/jenkins/plugins url=http://updates.jenkins-ci.org/latest/{{ item }}
+  notify: 
+    # should be in goozbach.jenkins role
+    - reload jenkins
+  with_items: jenkins_git_plugins
+  tags:
+    - jenkins-git

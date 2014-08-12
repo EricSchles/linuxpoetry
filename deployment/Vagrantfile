@@ -12,6 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # run: vagrant install vagrant-hostupdater
     webserver.vm.network :private_network, ip: "192.168.3.10"
     webserver.vm.network :forwarded_port, guest: 80, host: 1776, auto_correct: true
+    webserver.vm.network :forwarded_port, guest: 8080, host: 1777, auto_correct: true
     webserver.vm.hostname = "webserver"
   end
 
