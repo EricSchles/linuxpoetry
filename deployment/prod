@@ -3,3 +3,6 @@ webservers
 
 [webservers]
 ec2-54-85-222-238.compute-1.amazonaws.com
+
+[jenkins]
+ec2-54-85-222-238.compute-1.amazonaws.com
