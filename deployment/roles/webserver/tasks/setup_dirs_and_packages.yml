@@ -13,7 +13,6 @@
 - name: Create the project directory.
   file: state=directory 
         path={{ project_root }}
-        state=directory
         mode=755
 
 - name: Create user.
