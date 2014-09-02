@@ -9,4 +9,3 @@
   template: src="{{ item }}.j2"
             dest="/etc/supervisor/conf.d/{{ item }}"
   with_items: supervisord_confs
-  notify: reload supervisor

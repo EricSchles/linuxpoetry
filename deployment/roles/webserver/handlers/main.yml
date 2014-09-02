@@ -11,6 +11,10 @@
   shell: "{{ project_scripts }}/kill_gunicorn.sh"
   sudo_user: root
 
+- name: start supervisord
+  service: name=supervisor state=started
+  sudo_user: root
+
 - name: reload supervisor 
   shell: supervisorctl reload
   sudo_user: root

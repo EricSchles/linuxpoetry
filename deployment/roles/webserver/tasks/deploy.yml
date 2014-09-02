@@ -16,5 +16,4 @@
   notify: 
     - kill gunicorn
     - restart nginx
-    - reload supervisor
-    - restart supervisor
+    - start supervisord
