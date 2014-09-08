@@ -1,0 +1,8 @@
+[vagrant:children]
+webservers
+
+[webservers]
+webserver 
+
+[jenkins]
+webserver

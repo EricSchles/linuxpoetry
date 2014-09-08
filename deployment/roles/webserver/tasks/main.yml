@@ -1,0 +1,6 @@
+---
+- include: provision.yml
+  tags: provision
+
+- include: deploy.yml
+  tags: deploy

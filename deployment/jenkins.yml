@@ -1,0 +1,9 @@
+---
+
+- name: Provision Jenkins
+  hosts: jenkins
+  sudo: yes
+  sudo_user: root
+  remote_user: "{{ remote_user }}"
+  roles:
+    - jenkins 

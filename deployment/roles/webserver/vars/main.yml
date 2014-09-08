@@ -1,0 +1,25 @@
+---
+
+project_code_real: "{{ project_root }}/code/{{ version }}"
+project_code: "{{ project_root }}/code/current"
+project_scripts: "{{ project_root }}/scripts"
+project_home: "{{ project_root }}/home"
+project_venv_real: "{{ project_root }}/env/{{ version }}"
+project_venv: "{{ project_root }}/env/current"
+project_static: "{{ project_code }}/static"
+
+system_packages:
+  - git
+  - python-setuptools
+  - python-dev
+python_packages:
+  - pip
+  - virtualenv
+  - gunicorn
+supervisord_confs:
+  - gunicorn.conf
+scripts:
+  - start_gunicorn.sh
+files:
+  - kill_gunicorn.sh
+  - start.sh

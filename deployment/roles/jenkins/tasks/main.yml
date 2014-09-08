@@ -1,0 +1,26 @@
+---
+
+- name: install jenkins-git packages loop
+  apt: name={{ item }} state=installed
+  with_items:
+    - git
+  tags:
+    - jenkins-git
+
+- name: ensure the plugins directory exists
+  file: name=/var/lib/jenkins/plugins
+        state=directory
+        owner={{ jenkins_user }}
+        group={{ jenkins_group }}
+
+- name: download jenkins-git plugins
+  sudo_user: jenkins
+  get_url: dest=/var/lib/jenkins/plugins url=http://updates.jenkins-ci.org/latest/{{ item }}
+  notify: 
+    - reload jenkins
+  with_items: jenkins_git_plugins
+  tags:
+    - jenkins-git
+
+- name: Make jenkins a passwordless sudoer
+  shell: "echo \"%{{ jenkins_group }}         ALL = (ALL) NOPASSWD: ALL\" >> /etc/sudoers"

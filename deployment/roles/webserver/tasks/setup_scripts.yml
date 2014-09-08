@@ -1,0 +1,20 @@
+---
+
+- name: Create the scripts directory.
+  file: group={{ project_name }}
+        owner={{ project_name }} 
+        mode=755 
+        state=directory 
+        path={{ project_scripts }}
+
+- name: Render scripts.
+  template: src="{{ item }}.j2" 
+            dest="{{ project_scripts }}/{{item}}"
+            mode=0744
+  with_items: scripts
+
+- name: Copy scripts.
+  copy: src={{ item }}
+        dest="{{ project_scripts }}/{{ item }}"
+        mode=0744
+  with_items: files

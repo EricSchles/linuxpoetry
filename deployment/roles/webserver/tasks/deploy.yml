@@ -1,0 +1,19 @@
+---
+  
+- name: Pull sources from the repository.
+  git: repo={{ project_repo }} 
+       dest={{ project_code_real }}
+       version={{ branch }}
+  
+- name: Install requirements to virtual environment.
+  pip: requirements="{{ project_code_real }}/requirements.txt"
+       virtualenv={{ project_venv_real }}
+       
+- name: Sync the database and restart the server. 
+  django_manage: command=syncdb
+                 app_path={{ project_code }}
+                 virtualenv={{ project_venv }}
+  notify: 
+    - kill gunicorn
+    - restart nginx
+    - start supervisord
