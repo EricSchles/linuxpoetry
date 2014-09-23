@@ -4,7 +4,7 @@ import os
 from buildslave.bot import BuildSlave
 from twisted.application import service
 
-basedir = '/home/mrrrgn/Dropbox/projects/django/poetry/buildbot/master/slave1'
+basedir = '/home/mrrrgn/Dropbox/projects/django/poetry/buildbot/master'
 rotateLength = 10000000
 maxRotatedFiles = 10
 
