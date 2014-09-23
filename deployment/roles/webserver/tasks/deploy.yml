@@ -8,12 +8,13 @@
 - name: Install requirements to virtual environment.
   pip: requirements="{{ project_code_real }}/requirements.txt"
        virtualenv={{ project_venv_real }}
+  notify:
+    - kill gunicorn
        
 - name: Sync the database and restart the server. 
   django_manage: command=syncdb
                  app_path={{ project_code }}
                  virtualenv={{ project_venv }}
   notify: 
-    - kill gunicorn
-    - restart nginx
     - restart supervisor
+    - restart nginx
