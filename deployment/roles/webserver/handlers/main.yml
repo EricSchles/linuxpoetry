@@ -20,5 +20,5 @@
   sudo_user: root
   
 - name: restart supervisor
-  shell: supervisorctl restart all
+  service: supervisor restart 
   sudo_user: root
