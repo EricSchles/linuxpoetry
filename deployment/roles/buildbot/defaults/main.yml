@@ -1,0 +1,6 @@
+---
+project_root: "/var/projects/{{ project_name }}"
+project_code: "{{ project_root }}/code/current"
+project_venv: "{{ project_root }}/env/current"
+project_buildbot: "{{ project_root }}/buildbot"
+branch: master

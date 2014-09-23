@@ -1,0 +1,28 @@
+---
+
+- name: Create buildbot directory
+  file: state=directory
+        path={{ project_buildbot }}
+        mode=755
+
+- name: Create a buildbot master
+  shell: "{{ project_venv }}/bin/buildbot create-master"
+  args:
+    chdir: "{{ project_buildbot }}" 
+
+- name: Install the buildbot master.cnf
+  template: src=master.cfg.j2
+            dest={{ project_buildbot }}/master.cfg
+
+- name: Create a buildbot slave
+  shell: "{{ project_venv }}/bin/buildslave create-slave {{ project_buildbot }}/slave1 localhost slave1 password1"
+
+- name: Start the build master
+  shell: "{{ project_venv }}/bin/buildbot start ."
+  args:
+    chdir: "{{ project_buildbot }}"
+
+- name: Start the build slave
+  shell: "{{ project_venv }}/bin/buildslave start slave1"
+  args:
+    chdir: "{{ project_buildbot }}"

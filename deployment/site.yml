@@ -1,5 +1,4 @@
 ---
 
 - include: webservers.yml
-
-- include: jenkins.yml
+- include: buildbot.yml

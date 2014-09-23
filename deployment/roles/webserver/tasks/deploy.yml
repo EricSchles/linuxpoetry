@@ -4,6 +4,7 @@
   git: repo={{ project_repo }} 
        dest={{ project_code_real }}
        version={{ branch }}
+       accept_hostkey=true
   
 - name: Install requirements to virtual environment.
   pip: requirements="{{ project_code_real }}/requirements.txt"

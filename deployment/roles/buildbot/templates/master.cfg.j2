@@ -23,8 +23,8 @@ c['protocols'] = {'pb': {'port': 9989}}
 from buildbot.changes.gitpoller import GitPoller
 c['change_source'] = []
 c['change_source'].append(GitPoller(
-        'git://github.com/mrrrgn/linuxpoetry.git',
-        workdir='gitpoller-workdir', branch='master',
+        '{{ project_repo }}',
+        workdir='gitpoller-workdir', branch='{{ branch }}',
         pollinterval=120))
 
 ####### SCHEDULERS
@@ -35,7 +35,7 @@ from buildbot.changes import filter
 c['schedulers'] = []
 c['schedulers'].append(SingleBranchScheduler(
                             name="all",
-                            change_filter=filter.ChangeFilter(branch='master'),
+                            change_filter=filter.ChangeFilter(branch='{{ branch }}'),
                             treeStableTimer=None,
                             builderNames=["ansiblerun"]))
 c['schedulers'].append(ForceScheduler(
@@ -47,8 +47,8 @@ c['schedulers'].append(ForceScheduler(
 from buildbot.process.factory import BuildFactory
 from buildbot.steps.shell import ShellCommand
 
-venv_path = os.path.join(buildbot_path, "../../../venv")
-ansible_path = os.path.join(buildbot_path, "../../deployment")
+venv_path = os.path.join(buildbot_path, "{{ project_venv }}")
+ansible_path = os.path.join(buildbot_path, "{{ project_code }}/deployment")
 
 factory = BuildFactory()
 factory.addStep(
@@ -84,7 +84,7 @@ from buildbot.status.web import authz, auth
 authz_cfg=authz.Authz(
     # change any of these to True to enable; see the manual for more
     # options
-    auth=auth.BasicAuth([("poetry","poetry")]),
+    auth=auth.BasicAuth([("{{ project_name }}","{{ project_name }}")]),
     gracefulShutdown = False,
     forceBuild = 'auth', # use this to test your slave once it is set up
     forceAllBuilds = False,
@@ -101,8 +101,8 @@ c['status'].append(html.WebStatus(http_port=8010, authz=authz_cfg))
 # installation's html.WebStatus home page (linked to the
 # 'titleURL') and is embedded in the title of the waterfall HTML page.
 
-c['title'] = "linuxpoetry"
-c['titleURL'] = "http://linux-poetry.com"
+c['title'] = "{{ project_name }}"
+c['titleURL'] = "http://{{ server_name }}"
 
 # the 'buildbotURL' string should point to the location where the buildbot's
 # internal web server (usually the html.WebStatus page) is visible. This
