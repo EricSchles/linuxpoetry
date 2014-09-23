@@ -17,4 +17,3 @@
                  virtualenv={{ project_venv }}
   notify: 
     - restart supervisor
-    - restart nginx
