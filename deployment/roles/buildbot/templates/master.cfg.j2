@@ -36,7 +36,7 @@ c['schedulers'] = []
 c['schedulers'].append(SingleBranchScheduler(
                             name="all",
                             change_filter=filter.ChangeFilter(branch='{{ branch }}'),
-                            treeStableTimer=None,
+                            treeStableTimer=60,
                             builderNames=["ansiblerun"]))
 c['schedulers'].append(ForceScheduler(
                             name="force",
