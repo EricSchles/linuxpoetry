@@ -10,7 +10,7 @@
   args:
     chdir: "{{ project_buildbot }}" 
 
-- name: Install the buildbot master.cnf
+- name: Install the buildbot master.cfg
   template: src=master.cfg.j2
             dest={{ project_buildbot }}/master.cfg
 
