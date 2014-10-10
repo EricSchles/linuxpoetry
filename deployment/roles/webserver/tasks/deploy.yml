@@ -5,6 +5,9 @@
        dest={{ project_code_real }}
        version={{ branch }}
        accept_hostkey=true
+
+- name: Make the static files readable
+  shell: "chown -R 777 {{ project_code_real }}/static/*"
   
 - name: Install requirements to virtual environment.
   pip: requirements="{{ project_code_real }}/requirements.txt"
