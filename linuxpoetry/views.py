@@ -81,7 +81,7 @@ class PoetryFeed(Feed):
     description = "Updates on the latest Linux poems."
 
     def items(self):
-        return Post.objects.order_by('-id')[:3]
+        return Post.objects.order_by('-id')[:10]
 
     def item_title(self, item):
         return item.title
@@ -91,3 +91,21 @@ class PoetryFeed(Feed):
 
     def item_link(self, item):
         return reverse("post", args=[item.pk])
+
+
+class MozillaFeed(Feed):
+    title = "Linux Poetry's Mozilla Blog"
+    link = "/blog/section/mozilla"
+    description = "Any Mozilla related blogposts."
+
+    def items(self):
+        return BlogPostTag.objects.get(name='mozilla').blogpost_set.order_by('-id')[:10]
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return "A new Mozilla/Releng post."
+
+    def item_link(self, item):
+        return reverse("blogsectionpost", args=['mozilla', item.pk])
