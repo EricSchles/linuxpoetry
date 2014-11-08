@@ -4,23 +4,30 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 
 from poetry.settings import SITE_ROOT, STATIC_URL
-from linuxpoetry.models import Post, BlogPost
+from linuxpoetry.models import Post, BlogPost, BlogPostTag
 
 
-def render_post(request, post_id=None, blog=False, template_name=None, post_qs=None):
+def render_post(request, post_id=None, template_name=None, post_qs=None, section=None):
     post = None
     next_id = None
     prev_id = None
+    post_qs = post_qs.order_by('-created_at')
     post_count = post_qs.count()
     if post_count > 0:
         if not post_id:
-            post = post_qs.order_by('-created_at')[0]
+            post = post_qs[0] 
+            if post_count > 1:
+                prev_id = post_qs[1].id
         else:
-            post = post_qs.get(id=post_id)
-        if post.id < post_count:
-            next_id = post.id + 1
-        if post.id > 1:
-            prev_id = post.id - 1
+            post_found = False
+            for p in post_qs:
+                if post_found is True:
+                    prev_id = p.id
+                elif int(p.id) == int(post_id):
+                    post = p
+                    post_found = True
+                if post_found is False:
+                    next_id = p.id
 
     return render_to_response(
         template_name,
@@ -30,9 +37,20 @@ def render_post(request, post_id=None, blog=False, template_name=None, post_qs=N
             'next_id': next_id,
             'prev_id': prev_id,
             'static_url': STATIC_URL,
+            'section': section
         }
     )
 
+
+def blogsection(request, section, post_id=None):
+    post_qs = BlogPostTag.objects.get(name=section).blogpost_set
+    return render_post(
+        request,
+        post_id, 
+        template_name='linuxpoetry/blogsection.html',
+        post_qs=post_qs,
+        section=section
+    )
 
 def index(request, post_id=None):
     return render_post(

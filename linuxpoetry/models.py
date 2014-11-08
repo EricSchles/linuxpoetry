@@ -56,8 +56,15 @@ class Post(BasePost):
 
 
 class BlogPostTag(BaseTag):
-    pass
+    @property
+    def url(self):
+        return "<a href=\"/blog/section/{name}\">{name}</a>".format(name=self.name)
 
 
 class BlogPost(BasePost):
     tags = models.ManyToManyField(BlogPostTag)
+
+    @property
+    def tags_str(self):
+        """Returns a comma delimited list of tags."""
+        return ', '.join([tag.url for tag in self.tags.all()])

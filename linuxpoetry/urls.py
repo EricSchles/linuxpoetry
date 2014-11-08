@@ -8,5 +8,7 @@ urlpatterns = patterns(
     url(r'^rss/$', views.PoetryFeed(), name="rss"),
     url(r'^blog/$', views.blogindex, name='blogindex'),
     url(r'^blog/(?P<post_id>\d+)/$', views.blogindex, name='blogpost'),
+    url(r'^blog/section/(?P<section>\w+)/$', views.blogsection, name='blogsection'),
+    url(r'^blog/section/(?P<section>\w+)/(?P<post_id>\d+)/$', views.blogsection, name='blogsectionpost'),
     url(r'^license/$', views.license, name='license'),
 )

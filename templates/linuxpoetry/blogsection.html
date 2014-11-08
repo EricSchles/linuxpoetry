@@ -1,0 +1,5 @@
+{% extends "linuxpoetry/blog.html" %}
+
+{% block text-align %}left{%endblock%}
+{% block prev_url %}{% url "blogsectionpost" section prev_id %}{% endblock %}
+{% block next_url %}{% url "blogsectionpost" section next_id %}{% endblock %}
