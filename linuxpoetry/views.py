@@ -105,7 +105,7 @@ class MozillaFeed(Feed):
         return item.title
 
     def item_description(self, item):
-        return "A new Mozilla/Releng post."
+        return item.body_with_html
 
     def item_link(self, item):
         return reverse("blogsectionpost", args=['mozilla', item.pk])

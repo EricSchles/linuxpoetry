@@ -7,5 +7,6 @@
   remote_user: "{{ remote_user }}"
   vars_files:
     - vars/vault/secret_key.yml
+    - roles/webserver/vars/main.yml
   roles:
     - buildbot
