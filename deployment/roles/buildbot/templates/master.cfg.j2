@@ -61,6 +61,12 @@ factory.addStep(
                     os.path.join(ansible_path, "webservers.yml")
                 ])
 )
+factory.addStep(
+    ShellCommand(command=["killall", "gunirocn"])
+)
+factory.addStep(
+    ShellCommand(command=["chmod", "-R", "777", "{{ project_static }}/*"])
+)
 
 from buildbot.config import BuilderConfig
 
