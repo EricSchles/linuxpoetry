@@ -15,7 +15,7 @@ def render_post(request, post_id=None, template_name=None, post_qs=None, section
     post_count = post_qs.count()
     if post_count > 0:
         if not post_id:
-            post = post_qs[0] 
+            post = post_qs[0]
             if post_count > 1:
                 prev_id = post_qs[1].id
         else:
@@ -23,6 +23,7 @@ def render_post(request, post_id=None, template_name=None, post_qs=None, section
             for p in post_qs:
                 if post_found is True:
                     prev_id = p.id
+                    break
                 elif int(p.id) == int(post_id):
                     post = p
                     post_found = True
@@ -42,16 +43,6 @@ def render_post(request, post_id=None, template_name=None, post_qs=None, section
     )
 
 
-def blogsection(request, section, post_id=None):
-    post_qs = BlogPostTag.objects.get(name=section).blogpost_set
-    return render_post(
-        request,
-        post_id, 
-        template_name='linuxpoetry/blogsection.html',
-        post_qs=post_qs,
-        section=section
-    )
-
 def index(request, post_id=None):
     return render_post(
         request,
@@ -67,6 +58,17 @@ def blogindex(request, post_id=None):
         post_id,
         template_name='linuxpoetry/blog.html',
         post_qs=BlogPost.objects
+    )
+
+
+def blogsection(request, section, post_id=None):
+    post_qs = BlogPostTag.objects.get(name=section).blogpost_set
+    return render_post(
+        request,
+        post_id,
+        template_name='linuxpoetry/blogsection.html',
+        post_qs=post_qs,
+        section=section
     )
 
 
