@@ -62,10 +62,10 @@ factory.addStep(
                 ])
 )
 factory.addStep(
-    ShellCommand(command=["killall", "gunirocn"])
+    ShellCommand(command=["killall", "gunicorn"])
 )
 factory.addStep(
-    ShellCommand(command=["chmod", "-R", "777", "{{ project_static }}/*"])
+    ShellCommand(command=["chmod", "777", "{{ project_static }}/*"])
 )
 
 from buildbot.config import BuilderConfig
